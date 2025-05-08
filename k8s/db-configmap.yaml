@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: default
+data:
+  # DATABASE_HOST: my-postgres.default.svc.cluster.local
+  DATABASE_HOST: my-postgres
+  DATABASE_PORT: "5432"
+

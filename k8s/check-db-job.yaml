@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: check-db-connection
+spec:
+  template:
+    spec:
+      containers:
+      - name: checker
+        image: fastapi-app:local
+        imagePullPolicy: Never
+        command: ["python", "/app/database.py"]  # замените на файл, в котором подключение
+        env:
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DATABASE_USER
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DATABASE_PASSWORD
+        - name: DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DATABASE_NAME
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: DATABASE_HOST
+        - name: DATABASE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: DATABASE_PORT
+      restartPolicy: Never
+  backoffLimit: 1
