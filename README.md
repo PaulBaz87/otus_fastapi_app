@@ -1,16 +1,16 @@
-# Cоздаем структуру структуру файлов и каталогов для helm chart'а приложения
+1. Cоздаем структуру структуру файлов и каталогов для helm chart'а приложения
 helm create my_app_chart
 
-# Подключаем OCI репозитории:
+2. Подключаем OCI репозитории:
 helm registry login registry-1.docker.io  [логинимся в Docker]
 helm pull oci://registry-1.docker.io/bitnamicharts/postgresql --version 15.5.2 [Скачиваем pg] 
 helm install my-postgresql ./postgresql-15.5.2.tgz -f helm/postgres/values.yaml [устанавливаем скаченное pg из чарта c применением нашего файла values.yaml]
 
-# Сартуем minikube и включаем ingress:
+3. Сартуем minikube и включаем ingress:
 minikube start
 minikube addons enable ingress
 
-# Применяем манифеста k8s:
+4. Применяем манифеста k8s:
 kubectl apply -f ./k8s/db-configmap.yaml
 kubectl apply -f ./k8s/db-secret.yaml
 kubectl apply -f ./k8s/fastapi-deployment.yaml
@@ -18,7 +18,7 @@ kubectl apply -f ./k8s/fastapi-service.yaml
 kubectl apply -f ./k8s/fastapi-ingress.yaml
 
 
-# Проверка работы в терминале:
+5. Проверка работы в терминале:
 [Выводим все записи БД]
 curl http://arch.homework/items/
 
